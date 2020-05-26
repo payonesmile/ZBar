@@ -58,8 +58,9 @@ int qr_code_data_list_extract_text(const qr_code_data_list *_qrlist,
   nqrdata=_qrlist->nqrdata;
   mark=(unsigned char *)calloc(nqrdata,sizeof(*mark));
   ntext=0;
-  /*This is the encoding the standard says is the default.*/
-  latin1_cd=iconv_open("UTF-8","ISO8859-1");
+  /*This is the encoding the standard says is the default.
+  latin1_cd=iconv_open("UTF-8","ISO8859-1");*/
+  latin1_cd=iconv_open("UTF-8","GB18030");
   /*But this one is often used, as well.*/
   sjis_cd=iconv_open("UTF-8","SJIS");
   /*This is a trivial conversion just to check validity without extra code.*/
@@ -160,8 +161,8 @@ int qr_code_data_list_extract_text(const qr_code_data_list *_qrlist,
       else sa_text[sa_ntext++]=(char)(fnc1_2ai-100);
     }
     eci=-1;
-    enc_list[0]=sjis_cd;
-    enc_list[1]=latin1_cd;
+    enc_list[0]=latin1_cd;
+    enc_list[1]=sjis_cd;
     enc_list[2]=utf8_cd;
     eci_cd=(iconv_t)-1;
     err=0;
